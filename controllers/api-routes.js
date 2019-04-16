@@ -114,6 +114,4 @@ module.exports = function (app) {
             }
         })
     });
-
-    // END export
 }
