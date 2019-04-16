@@ -1,0 +1,25 @@
+<div class="jumbotron">
+    <h1 class="display-4 text-center">"Real" News Scraper</h1>
+</div>
+
+<div class="container" id="article-container">
+    {{#each data}}
+        <div class="row">
+            <div class="col-sm-5 mb-3 mb-sm-3">
+            <a href="{{link}}" target="_blank">
+              <img class="img-fluid" src="{{img}}">
+            </a>
+          </div>
+          
+          <div class="col-sm-7 border-bottom border-secondary pb-3 pb-sm-3">
+            <h3 class="mb-2">
+              <a href="{{link}}" target="_blank">{{title}}</a> 
+            </h3>
+            <p class="mb-2">{{excerpt}}</p>
+            <button type="button" class="btn save-article" data-id="{{_id}}">Save Article</button>
+          </div>
+        </div>
+    {{/each}}
+</div>
+
+<script src="js/index.js"></script>
