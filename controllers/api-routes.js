@@ -58,59 +58,59 @@ module.exports = function (app) {
     });
 
     // Remove everything in Article collection
-    app.post("/api/clear", function (request, response) {
+    app.post("/api/clear", function (req, res) {
         db.Article.remove({saved: false}, function (results) { 
-            response.json(results)
+            res.json(results)
         })
     })
 
     // save article
-    app.put("/api/save/", function (request, response) {
+    app.put("/api/save/:id", function (req, res) {
         // console.log(request.body);
-        db.Article.findOneAndUpdate({ _id: request.body.id }, { saved: true }).then(results => response.json(results)).catch(err => res.json(err))
+        db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true }).then(results => res.json(results)).catch(err => res.json(err))
     });
     // UNsave article
-    app.put("/api/unsave/", function (request, response) {
+    app.put("/api/unsave/:id", function (req, res) {
         // console.log(request.body);
-        db.Article.findOneAndUpdate({ _id: request.body.id }, { saved: false }).then(results => response.json(results)).catch(err => res.json(err))
+        db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false }).then(results => res.json(results)).catch(err => res.json(err))
     });
 
-    app.post("/api/notes", function (request, response) {
-        const id = request.body.id;
+    app.post("/api/notes", function (req, res) {
+        const id = req.body.id;
         db.Article.findOne({ _id: id }).populate("note").then(article => {
-            response.json(article);
+            res.json(article);
         }).catch(err => res.json(err))
     });
 
     // Add Article Notes
-    app.put("/api/:id/add-note", function (request, response) {
-        console.log(request.body);
+    app.put("/api/:id/add-note", function (req, res) {
+        console.log(req.body);
         // create Note and link with article id
-        db.Note.create(request.body).then(note => {
+        db.Note.create(req.body).then(note => {
             console.log("addNote: ", addNote);
-            request.body["note"] = addNote._id;
-            console.log("request.body: ", request.body);
+            req.body["note"] = addNote._id;
+            console.log("request.body: ", req.body);
                 return (
                     db.Article.findOneAndUpdate(
-                        { _id: request.params.id },
+                        { _id: req.params.id },
                         { $push: { note: addNote._id } },
                         { new: true }
                     )
                 )
-        }).then(singleArticle => response.json(singleArticle)).catch(err => response.json(err));
+        }).then(singleArticle => res.json(singleArticle)).catch(err => res.json(err));
 
     })
 
     // Delete Note
-    app.delete("/api/remove-note/:id", function (request, response) {
-        console.log("DELETE NOTE: ", request.params.id );
-        db.Note.remove({_id: request.params.id },
+    app.delete("/api/remove-note/:id", function (req, res) {
+        console.log("DELETE NOTE: ", req.params.id );
+        db.Note.remove({_id: req.params.id },
         function(error, removed) {
             if (error) {
                 console.log("Delete Note Error: ", error);
-                response.json(error);
+                res.json(error);
             } else {
-                response.json(removed);
+                res.json(removed);
             }
         })
     });

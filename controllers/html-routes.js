@@ -13,6 +13,12 @@ module.exports = function(app) {
     })
 
     app.get("/saved", function(req, res){
-        res.render("saved");
+        
+        db.Article.find({saved: true}).then(articles => {
+
+            hbObj = {data: articles}
+
+            res.render("saved", hbObj)
+        }).catch(err => console.log(err));
     })
 }

@@ -16,7 +16,9 @@
               <a href="{{link}}" target="_blank">{{title}}</a> 
             </h3>
             <p class="mb-2">{{excerpt}}</p>
+            {{#unless saved}}
             <button type="button" class="btn save-article" data-id="{{_id}}">Save Article</button>
+            {{/unless}}
           </div>
         </div>
     {{/each}}

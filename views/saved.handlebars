@@ -1,0 +1,57 @@
+<div class="jumbotron">
+    <h1 class="display-4 text-center">Saved "Articles"</h1>
+</div>
+
+<div class="container" id="article-container">
+    {{#each data}}
+        <div class="row">
+            <div class="col-sm-5 mb-3 mb-sm-3">
+            <a href="{{link}}" target="_blank">
+              <img class="img-fluid" src="{{img}}">
+            </a>
+          </div>
+          
+          <div class="col-sm-7 border-bottom border-secondary pb-3 pb-sm-3">
+            <h3 class="mb-2">
+              <a href="{{link}}" target="_blank">{{title}}</a> 
+            </h3>
+            <p class="mb-2">{{excerpt}}</p>
+            <button type="button" class="btn unsave-article" data-id="{{_id}}">Unsave</button>
+          </div>
+        </div>
+    {{/each}}
+</div>
+
+<div class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Comments</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="comments-container">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="comment-author">Email address</label>
+            <input type="text" class="form-control" id="comment-author" placeholder="Anonymous">
+          </div>
+          <div class="form-group">
+            <label for="comment-body">Example textarea</label>
+            <textarea class="form-control" id="comment-body" rows="3"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/saved.js"></script>
